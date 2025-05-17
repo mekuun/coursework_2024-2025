@@ -2,6 +2,9 @@ import pandas as pd, numpy as np, matplotlib.pyplot as plt
 from prophet import Prophet
 from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
 
+def smape(y_true, y_pred):
+    return 100 * np.mean(2 * np.abs(y_pred - y_true) / (np.abs(y_pred) + np.abs(y_true) + 1e-6))
+
 device           = 'cuda'  
 cutoff_year      = 2020
 future_years     = 2
@@ -24,7 +27,7 @@ print('Тем после фильтрации:', yt.shape[1])
 yt_frac = (yt.div(yt.sum(1), 0)
              .rolling(rolling_window, 1).mean())
 
-#  Прогнозирование, метрики 
+# metrics
 metrics = []
 for tid in yt_frac.columns:
     ser = yt_frac[tid]
@@ -40,16 +43,17 @@ for tid in yt_frac.columns:
     y_pred = np.expm1(m.predict(fut)['yhat'].values)
     y_true = ts.values
     mae = mean_absolute_error(y_true, y_pred)
-    mape = mean_absolute_percentage_error(y_true+1e-6, y_pred)*100
+    mape = mean_absolute_percentage_error(y_true + 1e-6, y_pred) * 100
     rmse = mean_squared_error(y_true, y_pred, squared=False)
-    metrics.append([tid, mae, mape, rmse])
-    print(f'Тема {tid}: MAE={mae:.3f}  MAPE={mape:.1f}%  RMSE={rmse:.3f}')
+    smape_val = smape(y_true, y_pred)
+    metrics.append([tid, mae, mape, rmse, smape_val])
+    print(f'Тема {tid}: MAE={mae:.3f}  MAPE={mape:.1f}%  RMSE={rmse:.3f}  SMAPE={smape_val:.1f}%')
 
 if metrics:
-    mdf = pd.DataFrame(metrics, columns=['topic','MAE','MAPE','RMSE'])
-    print('\nСредние метрики:\n', mdf[['MAE','MAPE','RMSE']].mean().round(2))
+    mdf = pd.DataFrame(metrics, columns=['topic','MAE','MAPE','RMSE','SMAPE'])
+    print('\nСредние метрики:\n', mdf[['MAE','MAPE','RMSE','SMAPE']].mean().round(2))
 
-import matplotlib.pyplot as plt
+# vis test
 import matplotlib.cm as cm
 
 plt.figure(figsize=(14, 8))
@@ -57,12 +61,8 @@ colors = plt.get_cmap('tab10')
 
 for i, tid in enumerate(yt_frac.columns):
     ser = yt_frac[tid].copy()
-
-    # делим
     pre = ser[ser.index <= cutoff_year]
     post_real = ser[ser.index > cutoff_year]
-
-    # прогноз
     df_tr = pd.DataFrame({'ds': pd.to_datetime(pre.index, format='%Y'),
                           'y' : np.log1p(pre.values)})
     m = Prophet(yearly_seasonality=False,
@@ -71,20 +71,14 @@ for i, tid in enumerate(yt_frac.columns):
     fut = pd.DataFrame({'ds': pd.to_datetime(post_real.index, format='%Y')})
     fc = m.predict(fut)
     post_pred = pd.Series(np.expm1(fc['yhat'].values), index=post_real.index)
-
-    color = colors(i % 10)  # максимум 10 цветов, затем по кругу
-
-    # основная линия
+    color = colors(i % 10)
     plt.plot(ser.index, ser.values * 100, label=f'Тема {tid}', color=color)
-
-    # точка прогноза
     if 2024 in post_pred.index:
         plt.scatter([2024], [post_pred.loc[2024] * 100],
                     color=color, marker='o', s=50, zorder=5)
 
 plt.xlabel('Год')
 plt.ylabel('Доля темы (%)')
-#plt.yscale('log')
 plt.title('Популярность тем с прогнозом на 2024 (точки)')
 plt.grid(True)
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
@@ -92,8 +86,7 @@ plt.tight_layout()
 plt.savefig('topic_forecast_colored_dot_2024.png')
 plt.show()
 
-
-# Финальный прогноз 
+# predict
 pred = {}
 for tid in yt_frac.columns:
     ser = yt_frac[tid]
@@ -113,12 +106,16 @@ yt_frac = yt_frac.reindex(yt_frac.index.union(all_future), fill_value=0)
 for tid, s in pred.items():
     yt_frac.loc[s.index, tid] = s.values
 
-#  Визуализация 
-plt.figure(figsize=(14,8))
+# vis
+plt.figure(figsize=(14, 8))
 for tid in yt_frac.columns:
-    plt.plot(yt_frac.index, yt_frac[tid]*100, label=f'Тема {tid}')
-plt.xlabel('Год'); plt.ylabel('Доля темы (%)'); plt.yscale('log')
+    plt.plot(yt_frac.index, yt_frac[tid] * 100, label=f'Тема {tid}')
+plt.xlabel('Год')
+plt.ylabel('Доля темы (%)')
+plt.yscale('log')
 plt.title('Популярность тем (прогноз на 2025-2026)')
-plt.legend(bbox_to_anchor=(1.05,1), loc='upper left')
-plt.grid(True); plt.tight_layout()
-plt.savefig('topic_popularity.png'); plt.show()
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.grid(True)
+plt.tight_layout()
+plt.savefig('topic_popularity.png')
+plt.show()
