@@ -1,0 +1,26 @@
+topic_id,words,Titles
+0,"['matter', 'proceedings', 'non', 'violation', 'flavor', 'flavour', 'charged', 'charge', 'investigation', 'exotic']",Exotic Flavor Charge Violation
+1,"['nuclei', 'reaction', 'reactions', 'double', 'fission', 'beta', 'single', 'nucleus', 'trigger', 'fusion']",Nuclear Fission and Fusion
+2,"['proton', 'muon', 'tev', 'energies', 'neutrinos', 'mev', 'tau', 'rhic', 'lambda', 'collective']",High-Energy Particle Interactions
+3,"['cross', 'section', 'density', 'flow', 'sections', 'temperature', 'rich', 'background', 'sources', 'luminosity']",Heavy-Ion Collision Environment
+4,"['model', 'design', 'theory', 'systems', 'dynamics', 'models', 'applications', 'gauge', 'application', 'equation']",Gauge Theory and Applications
+5,"['decay', 'decays', 'higgs', 'boson', 'meson', 'nucleon', 'hadronic', 'gev', 'lepton', 'pion']",Higgs Boson Decay Products
+6,"['cms', 'measurement', 'gamma', 'ray', 'cosmic', 'telescope', 'cosmological', 'calibration', 'observatory', 'observations']",Cosmic Ray Telescope Calibration
+7,"['quantum', 'physics', 'alice', 'simulation', 'simulations', 'astrophysics', 'calculations', 'learning', 'computing', 'astrophysical']",ALICE Physics Simulations and Computing
+8,"['energy', 'production', 'nuclear', 'new', 'recent', 'future', 'project', 'prospects', 'potential', 'generation']",Future Nuclear Energy Generation
+9,"['upgrade', 'facility', 'run', 'belle', 'overview', 'parton', 'program', 'ell', 'review', 'acquisition']",Belle II Experiment Upgrade Review
+10,"['experiment', 'study', 'results', 'measurements', 'studies', 'experiments', 'experimental', 'test', 'testing', 'tests']",Experimental Particle Physics Studies
+11,"['heavy', 'mass', 'quark', 'relativistic', 'gravitational', 'wave', 'transverse', 'black', 'ring', 'vector']",Quark Ring Gravitational Waves
+12,"['high', 'collisions', 'low', 'light', 'jet', 'star', 'space', 'fast', 'stars', 'rays']",High Energy Cosmic Rays
+13,"['lhc', 'beam', 'hadron', 'accelerator', 'cern', 'collider', 'beams', 'accelerators', 'synchrotron', 'fermilab']",Hadron Collider Beam Physics
+14,"['dark', 'scattering', 'lattice', 'searches', 'symmetry', 'cavity', 'cavities', 'probing', 'pair', 'hole']",Probing Dark Matter Interactions
+15,"['qcd', 'field', 'spin', 'superconducting', 'chiral', 'optical', 'array', 'characterization', 'vacuum', 'dimensional']",QCD Chiral Vacuum Characterization
+16,"['using', 'search', 'based', 'data', 'analysis', 'approach', 'method', 'precision', 'standard', 'target']",Precision Standard Model Data Analysis
+17,"['neutrino', 'performance', 'multi', 'bar', 'commissioning', 'prototype', 'storage', 'transport', 'workshop', 'cryogenic']",Neutrino Cryogenic Detector Performance
+18,"['status', 'structure', 'effects', 'properties', 'gravity', 'effect', 'event', 'evolution', 'strong', 'impact']",Gravity's Impact on Particle Evolution
+19,"['parc', 'calorimeter', 'linac', 'perspectives', 'icecube', 'beamline', 'calorimeters', 'daq', 'scintillator', 'pitz']",Particle Astrophysics and Calorimetry
+20,"['development', 'phase', 'source', 'control', 'power', 'transition', 'conference', 'level', 'reconstruction', 'process']",Particle Physics Power Control Development
+21,"['detector', 'electron', 'detectors', 'magnetic', 'induced', 'emission', 'resonance', 'thermal', 'spectrometer', 'flux']",Electron Magnetic Resonance Spectrometer
+22,"['neutron', 'particle', 'photon', 'radiation', 'detection', 'interactions', 'interaction', 'electromagnetic', 'spectroscopy', 'plasma']",Neutron Electromagnetic Interaction Spectroscopy
+23,"['time', 'states', 'state', 'large', 'distribution', 'international', 'small', 'direct', 'compact', 'band']",Time-Bandwidth Uncertainty Principle
+24,"['atlas', 'ion', 'laser', 'pixel', 'readout', 'silicon', 'ultra', 'tracker', 'machine', 'fel']",ATLAS Silicon Tracker Readout
